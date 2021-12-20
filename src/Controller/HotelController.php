@@ -45,8 +45,6 @@ class HotelController extends AbstractController
      */
     public function createHotel(Request $request): Response
     {
-        // rework this!
-
         $hotel = new Hotel();
         $form = $this->createForm(HotelType::class, $hotel);
 

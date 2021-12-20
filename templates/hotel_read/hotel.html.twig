@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Список комнат{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+
+    th {
+        font-size: 13px;
+        font-weight: normal;
+        background: #b9c9fe;
+        border-top: 4px solid #aabcfe;
+        border-bottom: 1px solid white;
+        color: #039;
+        padding: 8px;
+    }
+    td {
+        background: #e8edff;
+        border-bottom: 1px solid white;
+        color: #669;
+        border-top: 1px solid transparent;
+        padding: 8px;
+    }
+    tr:hover td {
+        background: #ccddff;
+    }
+</style>
+
+<table>
+
+    <tr>
+        <th>Номер комнаты</th>
+        <th>Этаж</th>
+        <th>Класс</th>
+        <th>Стоимость</th>
+        <th>Ответственный за комнату</th>
+        <th></th>
+        <th></th>
+    </tr>
+    {% for h in hotel %}
+        <tr>
+            <td>{{ h.id }}</td>
+            <td>{{ h.HotelInfo.NumberFloor }}</td>
+            <td>{{ h.HotelInfo.Cost }}</td>
+            <td>{{ h.HotelInfo.NumberClass }}</td>
+            <td>
+                {% for emp in employees %}
+                    {% if emp.id == h.id %}
+                        {{ emp }}
+                    {% endif %}
+                {% endfor %}
+            </td>
+            <td>
+                <a href="{{ path('delete_hotel', { 'hotelid': h.id, 'redirect': 'hotel_read' } ) }}">Delete</a>
+            </td>
+            <td>
+                <a href="{{ path('update_hotel', { 'hotelid': h.id, 'redirect': 'hotel_read' } ) }}">Update</a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
