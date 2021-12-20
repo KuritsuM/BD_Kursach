@@ -2,19 +2,20 @@
 
 namespace App\Form;
 
-use App\Entity\Hotel;
+use App\Entity\IngridientsOrder;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class HotelType extends AbstractType
+class IngridientOrderType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('hotelInfo', HotelInfoType::class)
-            ->add('employee')
+            ->add('date')
+            ->add('count')
+            ->add('foodIngridients')
             ->add('save', SubmitType::class)
         ;
     }
@@ -22,7 +23,7 @@ class HotelType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Hotel::class,
+            'data_class' => IngridientsOrder::class,
         ]);
     }
 }

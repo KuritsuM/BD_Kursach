@@ -2,15 +2,13 @@
 
 namespace App\Form;
 
-use App\Entity\Employee;
-use App\Entity\Position;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Client;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-
-class EmployeeType extends AbstractType
+class ClientType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -18,21 +16,14 @@ class EmployeeType extends AbstractType
             ->add('name')
             ->add('telephone')
             ->add('email')
-            ->add(
-                'positions', EntityType::class, array(
-                    'class' => Position::class,
-                    'expanded' => "true",
-                    'multiple' => "true"
-                )
-            )
-            ->add('employeeInfo', EmployeeInfoType::class)
+            ->add('save', SubmitType::class)
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Employee::class,
+            'data_class' => Client::class,
         ]);
     }
 }

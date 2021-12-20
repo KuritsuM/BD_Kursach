@@ -20,9 +20,9 @@ class Hotel
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=HotelInfo::class, mappedBy="hotel_id", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=HotelInfo::class, mappedBy="hotel", cascade={"persist", "remove"})
      */
-    private $hotelInfo;
+    private HotelInfo $hotelInfo;
 
     /**
      * @ORM\ManyToMany(targetEntity=Reservation::class, mappedBy="hotel")
@@ -34,9 +34,15 @@ class Hotel
      */
     private $employee;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=FoodOrder::class, inversedBy="hotels")
+     */
+    private $foodOrder;
+
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
+        $this->foodOrder = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -104,4 +110,35 @@ class Hotel
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->id . ' ' . $this->hotelInfo->getCost() . ' ' . $this->hotelInfo->getNumberFloor() . ' ' . $this->hotelInfo->getNumberClass();
+    }
+
+    /**
+     * @return Collection|FoodOrder[]
+     */
+    public function getFoodOrder(): Collection
+    {
+        return $this->foodOrder;
+    }
+
+    public function addFoodOrder(FoodOrder $foodOrder): self
+    {
+        if (!$this->foodOrder->contains($foodOrder)) {
+            $this->foodOrder[] = $foodOrder;
+        }
+
+        return $this;
+    }
+
+    public function removeFoodOrder(FoodOrder $foodOrder): self
+    {
+        $this->foodOrder->removeElement($foodOrder);
+
+        return $this;
+    }
+
+
 }

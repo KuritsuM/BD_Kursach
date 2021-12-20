@@ -160,7 +160,6 @@ class Employee
     {
         if (!$this->positions->contains($position)) {
             $this->positions[] = $position;
-            $position->addEmployee($this);
         }
 
         return $this;
@@ -174,4 +173,11 @@ class Employee
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+
 }

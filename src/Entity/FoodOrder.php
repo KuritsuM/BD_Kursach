@@ -29,9 +29,15 @@ class FoodOrder
      */
     private $food;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Hotel::class, mappedBy="foodOrder")
+     */
+    private $hotels;
+
     public function __construct()
     {
         $this->food = new ArrayCollection();
+        $this->hotels = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -73,6 +79,33 @@ class FoodOrder
     {
         if ($this->food->removeElement($food)) {
             $food->removeFoodOrder($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Hotel[]
+     */
+    public function getHotels(): Collection
+    {
+        return $this->hotels;
+    }
+
+    public function addHotel(Hotel $hotel): self
+    {
+        if (!$this->hotels->contains($hotel)) {
+            $this->hotels[] = $hotel;
+            $hotel->addFoodOrder($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHotel(Hotel $hotel): self
+    {
+        if ($this->hotels->removeElement($hotel)) {
+            $hotel->removeFoodOrder($this);
         }
 
         return $this;
